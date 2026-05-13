@@ -1,7 +1,6 @@
 import React, { useState, useEffect, Component, ErrorInfo, ReactNode } from 'react';
 import { courseData, Topic } from './data/courseData';
 import { Quiz } from './components/Quiz';
-import { AITutor } from './components/AITutor';
 import { CheatSheet } from './components/CheatSheet';
 import { Flashcards } from './components/Flashcards';
 import { PracticeExams } from './components/PracticeExams';
@@ -41,7 +40,6 @@ function MainApp() {
   const [currentView, setCurrentView] = useState<'course' | 'cheatsheet' | 'flashcards' | 'practice' | 'reading'>('course');
   const [selectedTopicId, setSelectedTopicId] = useState<string>(courseData[0].topics[0].id);
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-  const [isTutorOpen, setIsTutorOpen] = useState(false);
   
   // Load progress from local storage
   const [completedTopics, setCompletedTopics] = useState<Set<string>>(() => {
@@ -338,18 +336,6 @@ function MainApp() {
           </div>
         )}
       </main>
-
-      {/* Floating AI Tutor Toggle */}
-      <button
-        onClick={() => setIsTutorOpen(true)}
-        className={`fixed bottom-12 right-12 px-6 py-4 bg-[#1A1A1A] text-white shadow-[8px_8px_0_0_#FF9900] hover:translate-x-1 hover:translate-y-1 hover:shadow-[4px_4px_0_0_#FF9900] transition-all z-40 flex items-center gap-4 font-semibold uppercase tracking-widest text-[10px] border border-white ${isTutorOpen ? 'translate-y-12 opacity-0 pointer-events-none' : 'translate-y-0 opacity-100'}`}
-      >
-        <span className="font-bold">Access AI Tutor</span>
-        <span className="text-[#FF9900] text-xl leading-none">→</span>
-      </button>
-
-      {/* AI Tutor Component */}
-      <AITutor isOpen={isTutorOpen} onClose={() => setIsTutorOpen(false)} />
 
     </div>
   );
