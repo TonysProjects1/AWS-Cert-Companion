@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect, Component, ErrorInfo, ReactNode } from 'react';
 import { courseData, Topic } from './data/courseData';
 import { Quiz } from './components/Quiz';
 import { AITutor } from './components/AITutor';
@@ -10,7 +10,33 @@ import { Home } from './components/Home';
 import { BookOpen, CheckCircle2, ChevronRight, Menu, MessageSquareText, Shield, Cloud, BrainCircuit, X, FileText, Layers, GraduationCap, Library, Home as HomeIcon } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 
-export default function App() {
+interface ErrorBoundaryProps {
+  children: ReactNode;
+}
+interface ErrorBoundaryState {
+  hasError: boolean;
+  error?: Error;
+}
+class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
+  constructor(props: ErrorBoundaryProps) {
+    super(props);
+    this.state = { hasError: false };
+  }
+  static getDerivedStateFromError(error: Error) {
+    return { hasError: true, error };
+  }
+  componentDidCatch(error: Error, errorInfo: ErrorInfo) {
+    console.error("ErrorBoundary caught an error", error, errorInfo);
+  }
+  render() {
+    if (this.state.hasError) {
+      return <div className="p-8 text-red-500 bg-red-50 h-screen"><h1 className="text-2xl font-bold mb-4">Something went wrong.</h1><pre>{this.state.error?.message}</pre></div>;
+    }
+    return this.props.children;
+  }
+}
+
+function MainApp() {
   const [selectedCert, setSelectedCert] = useState<string | null>(null);
   const [currentView, setCurrentView] = useState<'course' | 'cheatsheet' | 'flashcards' | 'practice' | 'reading'>('course');
   const [selectedTopicId, setSelectedTopicId] = useState<string>(courseData[0].topics[0].id);
@@ -326,6 +352,14 @@ export default function App() {
       <AITutor isOpen={isTutorOpen} onClose={() => setIsTutorOpen(false)} />
 
     </div>
+  );
+}
+
+export default function App() {
+  return (
+    <ErrorBoundary>
+      <MainApp />
+    </ErrorBoundary>
   );
 }
 

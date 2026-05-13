@@ -5,7 +5,7 @@ import { ChevronRight, RotateCcw, CheckCircle2, XCircle, ArrowRight, Bookmark, B
 export function PracticeExams() {
   const [examState, setExamState] = useState<'setup' | 'running' | 'results'>('setup');
   const [selectedDomain, setSelectedDomain] = useState<string>('all');
-  const [selectedQuestionCount, setSelectedQuestionCount] = useState<number>(10);
+  const [selectedQuestionCount, setSelectedQuestionCount] = useState<number | 'All'>(10);
   const [isExamMode, setIsExamMode] = useState<boolean>(false);
   
   const [activeQuestions, setActiveQuestions] = useState<PracticeQuestion[]>([]);
