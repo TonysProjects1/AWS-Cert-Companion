@@ -274,6 +274,12 @@ AWS handles the "Security OF the Cloud," while the Customer handles "Security IN
 *   **"We need a recommendation engine..." -> Avoid building from scratch.** The correct answer is usually \`Amazon Personalize\`. Answers suggesting manual complex algorithms in SageMaker are usually distractors for the practitioner level.
 *   **"We need high accuracy on traditional tabular data..." -> Avoid LLMs.** Generative AI models are massive, slow, and expensive. Use standard Machine Learning algorithms (XGBoost, Random Forests) via \`SageMaker AI\` for tabular data or regression tasks.
 *   **"We need to protect PII in S3..." -> Use Macie, not Guardrails.** Bedrock Guardrails protects prompt text in real-time. Amazon Macie scans S3 buckets asynchronously for sensitive data.
+*   **"We need to customize a Foundation Model with our private data..." -> Avoid Fine-Tuning as a first step.** The best practice is almost always RAG (Retrieval-Augmented Generation) or Prompt Engineering first. Fine-tuning or continuous pre-training are usually expensive distractors unless specifically mandated by highly specialized domain language requirements.
+*   **"We want an LLM to answer questions about live, rapidly changing data..." -> Do not fine-tune.** A model's weights freeze at training. The only way to provide real-time knowledge (like stock prices or inventory) is through RAG or AI Agents with tool access.
+*   **"We have a highly imbalanced dataset (e.g., 99% normal, 1% fraud)..." -> Never use Accuracy as the metric.** Accuracy is a distractor. The correct metric will be F1-Score, Recall, or Precision depending on the specific cost of a false positive/negative.
+*   **"We need to detect bias and explain model predictions..." -> Use Clarify, not Macie.** SageMaker Clarify handles model fairness and explainability. Macie is only for discovering sensitive data in S3.
+*   **"Our model is overfitting..." -> Do not add more layers or train longer.** Increasing model complexity or training epochs are distractors that make overfitting worse. Look for Early Stopping, Regularization (L1/L2), or adding more training data.
+*   **"We want to evaluate English-to-French translation..." -> Use BLEU, not ROUGE.** ROUGE is a distractor meant for Summarization. BLEU is specifically designed for evaluating translation algorithms.
 `
   }
 ];
