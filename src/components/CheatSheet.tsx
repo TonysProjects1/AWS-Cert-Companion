@@ -42,9 +42,9 @@ export function CheatSheet() {
             Cheat Sheet.
           </h1>
           <p className="mt-6 text-sm text-[#1A1A1A]/70 max-w-2xl leading-relaxed">
-            This module contains highly detailed, deeply technical reference material spanning all 5 exam domains. 
-            Reviewing this guide constitutes reviewing a 50+ page technical preparation manual. 
-            Use the export to PDF function to print or save a copy for offline study.
+            A comprehensive, structured study guide spanning all 5 exam domains for the AWS Certified AI Practitioner (AIF-C01) exam. 
+            This cheat sheet serves as a high-density, quick-reference companion for key services, foundational ML concepts, GenAI mechanics, and architectural patterns.
+            Use the export to PDF function to print or save a copy for offline review.
           </p>
         </div>
         <div className="flex flex-col items-end gap-3 shrink-0">

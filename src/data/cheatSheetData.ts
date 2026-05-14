@@ -61,6 +61,15 @@ You must know which metric to look at based on the business problem.
 
 *   **Underfitting (High Bias):** The model is too simple and cannot learn the underlying relationship. It performs poorly on both training and test data. *Solution: Add more features, use a more complex model, increase training time.*
 *   **Overfitting (High Variance):** The model is too complex and essentially "memorizes" the training data, including noise. It performs exceptionally well on training data but terribly on unseen test data. *Solution: Get more training data, remove features, use Regularization (L1/L2, Dropout), Stop training earlier (Early Stopping).*
+*   **Data Drift:** When the underlying statistical distribution of incoming live data changes compared to the training data. *Solution: Retrain the model on newer data.*
+*   **Concept Drift:** When the target variable you are trying to predict fundamentally changes its meaning. *Solution: Retrain the model.*
+
+### 1.7 AWS SageMaker Key Concepts
+
+*   **SageMaker Training Jobs:** Ephemeral clusters that spin up, train the model on S3 data, output an artifact, and terminate to save costs.
+*   **SageMaker Endpoints:** Persistent, highly-available infrastructure hosting the model for real-time inferencing (API calls).
+*   **SageMaker Data Wrangler:** Visual tool to simplify data preparation, cleaning, and feature engineering.
+*   **SageMaker Feature Store:** Purpose-built repository to store, share, and manage curated ML features.
 `
   },
   {
@@ -166,6 +175,13 @@ From lowest cost/effort to highest cost/effort:
 5.  **Domain Adaptation (Transfer Learning):** Fine-tuning the model on a massive corpus of highly specialized industry text (e.g., medical journals) so it learns domain vocabulary.
 6.  **PEFT / LoRA:** Fine-tuning technique that freezes the majority of original weights and trains a small "adapter." Massive compute savings.
 7.  **Continuous Pre-training / Pre-training from Scratch:** Millions of dollars. Requires massive GPU clusters (Amazon EC2 P4/P5).
+
+**RAG vs Fine-Tuning Matrix:**
+*   **Need to add live, frequently changing data (e.g., current stock prices):** Use RAG.
+*   **Need to teach the model a completely new language or medical jargon:** Use Fine-tuning.
+*   **Need to reduce hallucinations with factual company documents:** Use RAG.
+*   **Need the model to output a very specific JSON structure every single time:** Use Fine-tuning.
+*   **Need both domain knowledge AND live data:** Use both (Fine-tune first, then RAG at runtime).
 
 ### 3.4 Multi-Modal Foundation Models & Selection Criteria
 
@@ -280,6 +296,10 @@ AWS handles the "Security OF the Cloud," while the Customer handles "Security IN
 *   **"We need to detect bias and explain model predictions..." -> Use Clarify, not Macie.** SageMaker Clarify handles model fairness and explainability. Macie is only for discovering sensitive data in S3.
 *   **"Our model is overfitting..." -> Do not add more layers or train longer.** Increasing model complexity or training epochs are distractors that make overfitting worse. Look for Early Stopping, Regularization (L1/L2), or adding more training data.
 *   **"We want to evaluate English-to-French translation..." -> Use BLEU, not ROUGE.** ROUGE is a distractor meant for Summarization. BLEU is specifically designed for evaluating translation algorithms.
+*   **"We need an enterprise search engine..." -> Don't train an LLM on documents.** The correct pairing is Amazon Kendra (for standard ML search) or Bedrock Knowledge Bases (for RAG). You don't "train" models just to be a search bar.
+*   **"We want to run Llama 3 on our own managed infrastructure..." -> Avoid Bedrock.** Bedrock is fully managed/serverless APIs. If the prompt explicitly requires managing the underlying EC2 instances directly, the answer is SageMaker JumpStart.
+*   **"We need to transcribe a medical conversation..." -> Look for the specialized service.** Don't just pick Amazon Transcribe. Look for Amazon Transcribe Medical. Same goes for Comprehend Medical.
+*   **"We must ensure data does NOT travel over the public internet..." -> Use VPC Endpoints (PrivateLink).** Often, the distractor will be "enable SSL/TLS" (which encrypts data, but it still goes over the public internet). Wait for the answer that mentions AWS PrivateLink.
 `
   }
 ];
