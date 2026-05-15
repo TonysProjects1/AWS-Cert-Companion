@@ -118,6 +118,19 @@ export function PracticeExams() {
 
   const currentQuestion = activeQuestions[currentIndex];
 
+  const markQuestionReviewed = (id: string) => {
+    try {
+      const saved = localStorage.getItem('aws-ai-reviewed-questions');
+      const reviewed = saved ? new Set<string>(JSON.parse(saved)) : new Set<string>();
+      if (!reviewed.has(id)) {
+        reviewed.add(id);
+        localStorage.setItem('aws-ai-reviewed-questions', JSON.stringify(Array.from(reviewed)));
+      }
+    } catch(e) {
+      console.warn("Could not save reviewed question", e);
+    }
+  };
+
   const handleSelectAnswer = (id: string) => {
     if (isAnswerRevealed && !isExamMode) return;
     setSelectedAnswerId(id);
@@ -129,6 +142,7 @@ export function PracticeExams() {
   const handleSubmitAnswer = () => {
     if (!selectedAnswerId) return;
     setIsAnswerRevealed(true);
+    markQuestionReviewed(currentQuestion.id);
     
     const isCorrect = currentQuestion.options.find(o => o.id === selectedAnswerId)?.isCorrect;
     if (isCorrect) {
@@ -166,6 +180,7 @@ export function PracticeExams() {
   const handleFinishExamMode = () => {
     let finalScore = 0;
     activeQuestions.forEach(q => {
+      markQuestionReviewed(q.id);
       const uAnswer = userAnswers[q.id];
       const correctOpt = q.options.find(o => o.isCorrect);
       if (uAnswer === correctOpt?.id) {

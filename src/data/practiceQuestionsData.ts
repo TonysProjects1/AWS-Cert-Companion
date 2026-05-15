@@ -13,11 +13,8 @@ export interface PracticeQuestion {
   options: PracticeOption[];
 }
 
-import { moreQuestions } from './moreQuestions';
-import { moreQuestions2 } from './moreQuestions2';
-import { moreQuestions3 } from './moreQuestions3';
 import { moreQuestions5 } from './moreQuestions5';
-import { generatedQuestions } from './generatedQuestions';
+import { moreQuestionsPremium } from './moreQuestionsPremium';
 
 export const practiceQuestionsData: PracticeQuestion[] = [
   // Domain 1
@@ -209,9 +206,6 @@ export const practiceQuestionsData: PracticeQuestion[] = [
       { id: "d", text: "Amazon Kendra", isCorrect: false, explanation: "Incorrect. Kendra is a managed enterprise search engine, not a recommendation engine." }
     ]
   },
-  ...moreQuestions,
-  ...moreQuestions2,
-  ...moreQuestions3,
   ...moreQuestions5,
-  ...generatedQuestions
+  ...moreQuestionsPremium
 ];

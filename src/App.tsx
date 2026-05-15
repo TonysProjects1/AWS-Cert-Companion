@@ -6,7 +6,8 @@ import { Flashcards } from './components/Flashcards';
 import { PracticeExams } from './components/PracticeExams';
 import { RecommendedReading } from './components/RecommendedReading';
 import { Home } from './components/Home';
-import { BookOpen, CheckCircle2, ChevronRight, Menu, MessageSquareText, Shield, Cloud, BrainCircuit, X, FileText, Layers, GraduationCap, Library, Home as HomeIcon } from 'lucide-react';
+import { QuestionBank } from './components/QuestionBank';
+import { BookOpen, CheckCircle2, ChevronRight, Menu, MessageSquareText, Shield, Cloud, BrainCircuit, X, FileText, Layers, GraduationCap, Library, Home as HomeIcon, Archive } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 
 interface ErrorBoundaryProps {
@@ -37,7 +38,7 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
 
 function MainApp() {
   const [selectedCert, setSelectedCert] = useState<string | null>(null);
-  const [currentView, setCurrentView] = useState<'course' | 'cheatsheet' | 'flashcards' | 'practice' | 'reading'>('course');
+  const [currentView, setCurrentView] = useState<'course' | 'cheatsheet' | 'flashcards' | 'practice' | 'reading' | 'questionbank'>('course');
   const [selectedTopicId, setSelectedTopicId] = useState<string>(courseData[0].topics[0].id);
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   
@@ -183,6 +184,23 @@ function MainApp() {
                     {currentView === 'reading' && <div className="h-2 w-2 rounded-full bg-[#FF9900]" />}
                   </div>
                 </button>
+                <button
+                  onClick={() => {
+                    setCurrentView('questionbank');
+                    if (window.innerWidth < 1024) setIsSidebarOpen(false);
+                  }}
+                  className={`w-full text-left py-3 border-b border-[#1A1A1A]/5 transition-all flex justify-between items-center group
+                    ${currentView === 'questionbank' ? 'opacity-100' : 'opacity-60 hover:opacity-100'}
+                  `}
+                >
+                  <div className={`pr-4 flex items-center gap-2 ${currentView === 'questionbank' ? 'text-lg font-serif italic' : 'text-sm font-sans'}`}>
+                    <Archive className="w-4 h-4" />
+                    Question Bank
+                  </div>
+                  <div className="flex items-center gap-3 shrink-0">
+                    {currentView === 'questionbank' && <div className="h-2 w-2 rounded-full bg-[#FF9900]" />}
+                  </div>
+                </button>
               </div>
             </div>
 
@@ -264,6 +282,12 @@ function MainApp() {
                   <span className="text-[#FF9900]">/</span>
                   <span>Recommended Reading</span>
                 </>
+              ) : currentView === 'questionbank' ? (
+                <>
+                  <span className="opacity-60">Resources</span>
+                  <span className="text-[#FF9900]">/</span>
+                  <span>Question Bank</span>
+                </>
               ) : (
                 <>
                   <span className="opacity-60">{selectedDomainTitle}</span>
@@ -288,6 +312,8 @@ function MainApp() {
           <PracticeExams />
         ) : currentView === 'reading' ? (
           <RecommendedReading />
+        ) : currentView === 'questionbank' ? (
+          <QuestionBank />
         ) : (
           <div className="max-w-4xl mx-auto px-8 py-16">
             {selectedTopic && (
