@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
 import { practiceQuestionsData } from '../data/practiceQuestionsData';
-import { Archive, Bookmark, BookmarkCheck, CheckCircle2 } from 'lucide-react';
+import { Archive, Bookmark, BookmarkCheck, CheckCircle2, XCircle } from 'lucide-react';
 
 export function QuestionBank() {
   const [reviewedQuestions, setReviewedQuestions] = useState<Set<string>>(new Set());
   const [flaggedQuestions, setFlaggedQuestions] = useState<Set<string>>(new Set());
+  const [questionHistory, setQuestionHistory] = useState<Record<string, boolean>>({});
 
   useEffect(() => {
     const savedReviewed = localStorage.getItem('aws-ai-reviewed-questions');
@@ -15,6 +16,11 @@ export function QuestionBank() {
     const savedFlagged = localStorage.getItem('aws-ai-flagged-questions');
     if (savedFlagged) {
       setFlaggedQuestions(new Set(JSON.parse(savedFlagged)));
+    }
+
+    const savedHistory = localStorage.getItem('aws-ai-question-history');
+    if (savedHistory) {
+      setQuestionHistory(JSON.parse(savedHistory));
     }
   }, []);
 
@@ -72,6 +78,8 @@ export function QuestionBank() {
         {filteredQuestions.map((q, i) => {
           const isReviewed = reviewedQuestions.has(q.id);
           const isFlagged = flaggedQuestions.has(q.id);
+          const hasHistory = q.id in questionHistory;
+          const wasCorrect = questionHistory[q.id];
 
           return (
             <div key={q.id} className={`p-8 border ${isReviewed ? 'border-[#1A1A1A]/20 bg-white shadow-sm' : 'border-[#1A1A1A]/10 bg-transparent'} relative group transition-all`}>
@@ -85,12 +93,29 @@ export function QuestionBank() {
                   </span>
                 </div>
                 <div className="flex items-center gap-4">
-                  {isReviewed && (
-                    <div className="flex items-center gap-1.5 text-green-600 text-[10px] uppercase tracking-widest font-bold">
+                  {hasHistory ? (
+                    wasCorrect ? (
+                      <div className="flex items-center gap-1.5 text-green-600 text-[10px] uppercase tracking-widest font-bold bg-green-50 px-3 py-1.5 border border-green-200">
+                        <CheckCircle2 className="w-4 h-4" />
+                        <span>Correct</span>
+                      </div>
+                    ) : (
+                      <div className="flex items-center gap-1.5 text-red-600 text-[10px] uppercase tracking-widest font-bold bg-red-50 px-3 py-1.5 border border-red-200">
+                        <XCircle className="w-4 h-4" />
+                        <span>Incorrect</span>
+                      </div>
+                    )
+                  ) : isReviewed ? (
+                    <div className="flex items-center gap-1.5 text-gray-600 text-[10px] uppercase tracking-widest font-bold px-3 py-1.5 border border-gray-200">
                       <CheckCircle2 className="w-4 h-4" />
-                      <span>Reviewed</span>
+                      <span>Taken</span>
+                    </div>
+                  ) : (
+                    <div className="flex items-center gap-1.5 text-gray-400 text-[10px] uppercase tracking-widest font-bold px-3 py-1.5 border border-transparent">
+                      <span>Not Taken</span>
                     </div>
                   )}
+
                   <button 
                     onClick={(e) => toggleFlag(q.id, e)}
                     className="opacity-50 hover:opacity-100 transition-opacity"
@@ -113,19 +138,13 @@ export function QuestionBank() {
                 {q.options.map(option => (
                   <div 
                     key={option.id} 
-                    className={`p-4 border text-sm flex gap-4 ${option.isCorrect ? 'border-green-500/30 bg-green-50/50' : 'border-[#1A1A1A]/10 opacity-70'} transition-all relative overflow-hidden`}
+                    className="p-4 border text-sm flex gap-4 border-[#1A1A1A]/10 opacity-70 transition-all relative overflow-hidden"
                   >
-                    {option.isCorrect && (
-                      <div className="absolute top-0 left-0 w-1 h-full bg-green-500" />
-                    )}
                     <div className="font-bold uppercase h-6 w-6 flex items-center justify-center border border-[#1A1A1A]/20 shrink-0 bg-white">
                       {option.id}
                     </div>
                     <div>
-                      <div className="font-medium mb-1">{option.text}</div>
-                      <div className="text-xs opacity-80 leading-relaxed font-serif italic">
-                        {option.explanation}
-                      </div>
+                      <div className="font-medium">{option.text}</div>
                     </div>
                   </div>
                 ))}

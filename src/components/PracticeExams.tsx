@@ -6,6 +6,7 @@ export function PracticeExams() {
   const [examState, setExamState] = useState<'setup' | 'running' | 'results'>('setup');
   const [selectedDomain, setSelectedDomain] = useState<string>('all');
   const [selectedQuestionCount, setSelectedQuestionCount] = useState<number | 'All'>(10);
+  const [unseenOnly, setUnseenOnly] = useState<boolean>(false);
   const [isExamMode, setIsExamMode] = useState<boolean>(false);
   
   const [activeQuestions, setActiveQuestions] = useState<PracticeQuestion[]>([]);
@@ -72,6 +73,16 @@ export function PracticeExams() {
     } else if (selectedDomain !== 'all') {
       filtered = filtered.filter(q => q.domainId === selectedDomain);
     }
+
+    if (unseenOnly) {
+      try {
+        const savedA = localStorage.getItem('aws-ai-reviewed-questions');
+        const reviewed = savedA ? new Set<string>(JSON.parse(savedA)) : new Set<string>();
+        filtered = filtered.filter(q => !reviewed.has(q.id));
+      } catch(e) {
+        console.warn("Could not read reviewed questions", e);
+      }
+    }
     
     // Shuffle
     filtered = [...filtered].sort(() => Math.random() - 0.5);
@@ -97,7 +108,19 @@ export function PracticeExams() {
 
   const handleStartSimulation = () => {
     setIsExamMode(true);
-    let filtered = [...practiceQuestionsData].sort(() => Math.random() - 0.5);
+    let filtered = [...practiceQuestionsData];
+
+    if (unseenOnly) {
+      try {
+        const savedA = localStorage.getItem('aws-ai-reviewed-questions');
+        const reviewed = savedA ? new Set<string>(JSON.parse(savedA)) : new Set<string>();
+        filtered = filtered.filter(q => !reviewed.has(q.id));
+      } catch(e) {
+        console.warn("Could not read reviewed questions", e);
+      }
+    }
+
+    filtered = filtered.sort(() => Math.random() - 0.5);
     // Standard AIF-C01 exam is 85 questions
     filtered = filtered.slice(0, Math.min(85, filtered.length));
     
@@ -118,7 +141,7 @@ export function PracticeExams() {
 
   const currentQuestion = activeQuestions[currentIndex];
 
-  const markQuestionReviewed = (id: string) => {
+  const recordQuestionResult = (id: string, isCorrect: boolean) => {
     try {
       const saved = localStorage.getItem('aws-ai-reviewed-questions');
       const reviewed = saved ? new Set<string>(JSON.parse(saved)) : new Set<string>();
@@ -126,8 +149,13 @@ export function PracticeExams() {
         reviewed.add(id);
         localStorage.setItem('aws-ai-reviewed-questions', JSON.stringify(Array.from(reviewed)));
       }
+
+      const savedHistory = localStorage.getItem('aws-ai-question-history');
+      const history = savedHistory ? JSON.parse(savedHistory) : {};
+      history[id] = isCorrect;
+      localStorage.setItem('aws-ai-question-history', JSON.stringify(history));
     } catch(e) {
-      console.warn("Could not save reviewed question", e);
+      console.warn("Could not save question history", e);
     }
   };
 
@@ -142,9 +170,9 @@ export function PracticeExams() {
   const handleSubmitAnswer = () => {
     if (!selectedAnswerId) return;
     setIsAnswerRevealed(true);
-    markQuestionReviewed(currentQuestion.id);
     
     const isCorrect = currentQuestion.options.find(o => o.id === selectedAnswerId)?.isCorrect;
+    recordQuestionResult(currentQuestion.id, !!isCorrect);
     if (isCorrect) {
       setScore(prev => prev + 1);
     }
@@ -180,10 +208,11 @@ export function PracticeExams() {
   const handleFinishExamMode = () => {
     let finalScore = 0;
     activeQuestions.forEach(q => {
-      markQuestionReviewed(q.id);
       const uAnswer = userAnswers[q.id];
       const correctOpt = q.options.find(o => o.isCorrect);
-      if (uAnswer === correctOpt?.id) {
+      const isCorrect = uAnswer === correctOpt?.id;
+      recordQuestionResult(q.id, isCorrect);
+      if (isCorrect) {
         finalScore += 1;
       }
     });
@@ -238,6 +267,19 @@ export function PracticeExams() {
                   </button>
                 ))}
               </div>
+            </div>
+
+            <div className="flex items-center gap-3">
+              <input
+                type="checkbox"
+                id="unseenOnly"
+                checked={unseenOnly}
+                onChange={(e) => setUnseenOnly(e.target.checked)}
+                className="w-5 h-5 accent-[#FF9900] cursor-pointer cursor-pointer border-[#1A1A1A]"
+              />
+              <label htmlFor="unseenOnly" className="text-sm font-bold text-[#1A1A1A] cursor-pointer uppercase tracking-widest">
+                Only show questions I haven't taken yet
+              </label>
             </div>
 
             <div className="pt-8 border-t border-[#1A1A1A]/10 flex flex-col md:flex-row md:items-center justify-between gap-4">
