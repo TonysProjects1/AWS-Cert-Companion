@@ -9,6 +9,7 @@ import { Home } from './components/Home';
 import { QuestionBank } from './components/QuestionBank';
 import { BookOpen, CheckCircle2, ChevronRight, Menu, MessageSquareText, Shield, Cloud, BrainCircuit, X, FileText, Layers, GraduationCap, Library, Home as HomeIcon, Archive } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
+import { Analytics } from '@vercel/analytics/react';
 
 interface ErrorBoundaryProps {
   children: ReactNode;
@@ -371,7 +372,7 @@ export default function App() {
   return (
     <ErrorBoundary>
       <MainApp />
+      <Analytics />
     </ErrorBoundary>
   );
 }
-
