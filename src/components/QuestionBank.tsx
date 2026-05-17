@@ -144,13 +144,13 @@ export function QuestionBank({ certId }: QuestionBankProps) {
               </h3>
 
               <div className="space-y-3">
-                {q.options.map(option => (
+                {q.options.map((option, index) => (
                   <div 
                     key={option.id} 
                     className="p-4 border text-sm flex gap-4 border-[#1A1A1A]/10 opacity-70 transition-all relative overflow-hidden"
                   >
                     <div className="font-bold uppercase h-6 w-6 flex items-center justify-center border border-[#1A1A1A]/20 shrink-0 bg-white">
-                      {option.id}
+                      {String.fromCharCode(65 + index)}
                     </div>
                     <div>
                       <div className="font-medium">{option.text}</div>
