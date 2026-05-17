@@ -1,5 +1,7 @@
 import React, { useState, useEffect, Component, ErrorInfo, ReactNode } from 'react';
-import { courseData, Topic } from './data/courseData';
+import { courseData as aifCourse, Topic } from './data/courseData';
+import { courseDataSAA as saaCourse } from './data/courseDataSAA';
+import { courseDataANS as ansCourse } from './data/courseDataANS';
 import { Quiz } from './components/Quiz';
 import { CheatSheet } from './components/CheatSheet';
 import { Flashcards } from './components/Flashcards';
@@ -9,6 +11,7 @@ import { Home } from './components/Home';
 import { QuestionBank } from './components/QuestionBank';
 import { BookOpen, CheckCircle2, ChevronRight, Menu, MessageSquareText, Shield, Cloud, BrainCircuit, X, FileText, Layers, GraduationCap, Library, Home as HomeIcon, Archive } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 
 interface ErrorBoundaryProps {
   children: ReactNode;
@@ -39,7 +42,7 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
 function MainApp() {
   const [selectedCert, setSelectedCert] = useState<string | null>(null);
   const [currentView, setCurrentView] = useState<'course' | 'cheatsheet' | 'flashcards' | 'practice' | 'reading' | 'questionbank'>('course');
-  const [selectedTopicId, setSelectedTopicId] = useState<string>(courseData[0].topics[0].id);
+  const [selectedTopicId, setSelectedTopicId] = useState<string>(aifCourse[0].topics[0].id);
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   
   // Load progress from local storage
@@ -60,6 +63,18 @@ function MainApp() {
     });
   };
 
+  // Effect to reset selectedTopicId when changing certs
+  useEffect(() => {
+    if (selectedCert) {
+      const activeData = selectedCert === 'saa-c03' ? saaCourse 
+                       : selectedCert === 'advanced-networking' ? ansCourse 
+                       : aifCourse;
+      if (activeData.length > 0 && activeData[0].topics.length > 0) {
+        setSelectedTopicId(activeData[0].topics[0].id);
+      }
+    }
+  }, [selectedCert]);
+
   if (!selectedCert) {
     return <Home onSelectCert={setSelectedCert} />;
   }
@@ -67,7 +82,12 @@ function MainApp() {
   // Find the currently selected topic details
   let selectedTopic: Topic | undefined;
   let selectedDomainTitle = '';
-  for (const domain of courseData) {
+  
+  const activeCourseData = selectedCert === 'saa-c03' ? saaCourse 
+                         : selectedCert === 'advanced-networking' ? ansCourse 
+                         : aifCourse;
+
+  for (const domain of activeCourseData) {
     const topic = domain.topics.find(t => t.id === selectedTopicId);
     if (topic) {
       selectedTopic = topic;
@@ -93,7 +113,7 @@ function MainApp() {
           <div className="p-8 pb-6 border-b border-[#1A1A1A]/10 flex items-baseline justify-between mb-2">
             <div className="flex flex-col">
               <span className="text-[10px] tracking-[0.2em] font-semibold text-[#FF9900] uppercase mb-1">Certified Compendium</span>
-              <span className="text-xs font-mono opacity-60 text-[#1A1A1A]">AIF-C01 // SESSION</span>
+              <span className="text-xs font-mono opacity-60 text-[#1A1A1A]">{selectedCert.toUpperCase()} // SESSION</span>
             </div>
             <button className="lg:hidden p-2 hover:bg-[#1A1A1A]/5 rounded" onClick={() => setIsSidebarOpen(false)}>
               <X className="w-5 h-5 text-[#1A1A1A]" />
@@ -204,7 +224,7 @@ function MainApp() {
               </div>
             </div>
 
-            {courseData.map((domain, index) => {
+            {activeCourseData.map((domain, index) => {
                return (
                 <div key={domain.id} className="space-y-4">
                   <div className="border-t border-[#1A1A1A] pt-4">
@@ -299,21 +319,21 @@ function MainApp() {
           </div>
           <div className="flex items-center gap-4 text-[#1A1A1A]">
             <div className="text-[10px] font-bold tracking-[0.2em] uppercase opacity-70">
-              Completion: {Math.round((completedTopics.size / courseData.reduce((acc, d) => acc + d.topics.length, 0)) * 100)}%
+              Completion: {Math.round((completedTopics.size / activeCourseData.reduce((acc, d) => acc + d.topics.length, 0)) * 100)}%
             </div>
           </div>
         </header>
 
         {currentView === 'cheatsheet' ? (
-          <CheatSheet />
+          <CheatSheet certId={selectedCert} />
         ) : currentView === 'flashcards' ? (
-          <Flashcards />
+          <Flashcards certId={selectedCert} />
         ) : currentView === 'practice' ? (
-          <PracticeExams />
+          <PracticeExams certId={selectedCert} />
         ) : currentView === 'reading' ? (
-          <RecommendedReading />
+          <RecommendedReading certId={selectedCert} />
         ) : currentView === 'questionbank' ? (
-          <QuestionBank />
+          <QuestionBank certId={selectedCert} />
         ) : (
           <div className="max-w-4xl mx-auto px-8 py-16">
             {selectedTopic && (
@@ -335,7 +355,7 @@ function MainApp() {
                       <span className="text-[10px] font-bold uppercase tracking-widest block mb-4 text-[#FF9900]">0{index + 1}. Subtopic</span>
                       <h3 className="text-3xl font-serif italic font-medium text-[#1A1A1A] mb-6">{subtopic.title}</h3>
                        <div className="prose prose-slate prose-lg max-w-none text-[#1A1A1A]/80 font-sans text-sm md:text-base leading-relaxed">
-                         <ReactMarkdown>{subtopic.content}</ReactMarkdown>
+                         <ReactMarkdown remarkPlugins={[remarkGfm]}>{subtopic.content}</ReactMarkdown>
                       </div>
                     </section>
                   ))}
@@ -351,7 +371,7 @@ function MainApp() {
                 <footer className='mt-24 pt-8 border-t border-[#1A1A1A]/10 flex justify-between items-center text-[9px] uppercase tracking-[0.2em] opacity-40 font-bold mb-32'>
                   <div className='flex gap-12'>
                     <span>Duration: Self-Paced</span>
-                    <span>AIF-C01 Prep</span>
+                    <span>{selectedCert === 'saa-c03' ? 'SAA-C03 Prep' : selectedCert === 'advanced-networking' ? 'ANS-C01 Prep' : 'AIF-C01 Prep'}</span>
                   </div>
                   <div>
                      <span>Framework &copy; 2024</span>

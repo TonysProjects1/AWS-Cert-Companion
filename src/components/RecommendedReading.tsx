@@ -1,7 +1,16 @@
-import { recommendedReadingData } from '../data/recommendedReadingData';
+import { recommendedReadingData as aifReading } from '../data/recommendedReadingData';
+import { recommendedReadingDataSAA as saaReading } from '../data/recommendedReadingDataSAA';
+import { recommendedReadingDataANS as ansReading } from '../data/recommendedReadingDataANS';
 import { ExternalLink, FileText, BookText, GraduationCap, MonitorPlay } from 'lucide-react';
 
-export function RecommendedReading() {
+interface RecommendedReadingProps {
+  certId: string;
+}
+
+export function RecommendedReading({ certId }: RecommendedReadingProps) {
+  const recommendedReadingData = certId === 'saa-c03' ? saaReading 
+                               : certId === 'advanced-networking' ? ansReading
+                               : aifReading;
   const getIcon = (type: string) => {
     switch (type) {
       case 'Whitepaper':
@@ -25,7 +34,7 @@ export function RecommendedReading() {
           Recommended Reading.
         </h1>
         <p className="mt-8 text-sm leading-relaxed opacity-70 italic border-l-2 border-[#FF9900] pl-6 max-w-xl font-serif">
-          Official AWS whitepapers, documentation, and guides to deepen your understanding of AI/ML concepts and prepare for the AIF-C01 exam.
+          Official AWS whitepapers, documentation, and guides to deepen your understanding and review material for the {certId.toUpperCase()} exam.
         </p>
       </div>
 

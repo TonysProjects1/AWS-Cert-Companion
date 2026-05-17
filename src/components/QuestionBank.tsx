@@ -1,8 +1,17 @@
 import { useState, useEffect } from 'react';
-import { practiceQuestionsData } from '../data/practiceQuestionsData';
+import { practiceQuestionsData as aifQuestions } from '../data/practiceQuestionsData';
+import { practiceQuestionsDataSAA as saaQuestions } from '../data/practiceQuestionsDataSAA';
+import { practiceQuestionsDataANS as ansQuestions } from '../data/practiceQuestionsDataANS';
 import { Archive, Bookmark, BookmarkCheck, CheckCircle2, XCircle } from 'lucide-react';
 
-export function QuestionBank() {
+interface QuestionBankProps {
+  certId: string;
+}
+
+export function QuestionBank({ certId }: QuestionBankProps) {
+  const practiceQuestionsData = certId === 'saa-c03' ? saaQuestions 
+                              : certId === 'advanced-networking' ? ansQuestions 
+                              : aifQuestions;
   const [reviewedQuestions, setReviewedQuestions] = useState<Set<string>>(new Set());
   const [flaggedQuestions, setFlaggedQuestions] = useState<Set<string>>(new Set());
   const [questionHistory, setQuestionHistory] = useState<Record<string, boolean>>({});

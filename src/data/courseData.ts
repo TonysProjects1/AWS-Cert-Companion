@@ -38,15 +38,15 @@ export const courseData: Domain[] = [
         subtopics: [
           {
             title: "Core Definitions",
-            content: "• **AI (Artificial Intelligence)**: Systems that can perform tasks typically requiring human intelligence.\n• **ML (Machine Learning)**: A subset of AI algorithms that learn from data without explicit programming.\n• **Deep Learning**: A subset of ML utilizing multi-layered artificial neural networks.\n• **Generative AI (GenAI)**: Advanced AI that creates new, original content (text, images, audio, code).\n• **Agentic AI**: AI systems or agents that can autonomously execute complex, multi-step tasks by interacting with external tools and APIs."
+            content: "- **AI (Artificial Intelligence)**: Systems that can perform tasks typically requiring human intelligence.\n- **ML (Machine Learning)**: A subset of AI algorithms that learn from data without explicit programming.\n- **Deep Learning**: A subset of ML utilizing multi-layered artificial neural networks.\n- **Generative AI (GenAI)**: Advanced AI that creates new, original content (text, images, audio, code).\n- **Agentic AI**: AI systems or agents that can autonomously execute complex, multi-step tasks by interacting with external tools and APIs."
           },
           {
             title: "Data and Learning Types",
-            content: "• **Data Types**: Labeled/unlabeled, tabular, time-series, image, text, structured/unstructured.\n• **Supervised Learning**: Model trained on labeled data predicting labels/values.\n• **Unsupervised Learning**: Model trained on unlabeled data finding patterns (e.g., clustering).\n• **Reinforcement Learning**: Agent learns to make decisions to maximize rewards through trial and error."
+            content: "- **Data Types**: Labeled/unlabeled, tabular, time-series, image, text, structured/unstructured.\n- **Supervised Learning**: Model trained on labeled data predicting labels/values.\n- **Unsupervised Learning**: Model trained on unlabeled data finding patterns (e.g., clustering).\n- **Reinforcement Learning**: Agent learns to make decisions to maximize rewards through trial and error."
           },
           {
             title: "Inferencing",
-            content: "Inferencing is using a trained model to make predictions. Types include:\n• **Batch**: Processing large volumes of data offline.\n• **Real-time**: Synchronous predictions with low latency.\n• **Asynchronous**: Requests are queued and processed later.\n• **Serverless**: Inferencing infrastructure scales automatically without server management."
+            content: "Inferencing is using a trained model to make predictions. Types include:\n- **Batch**: Processing large volumes of data offline.\n- **Real-time**: Synchronous predictions with low latency.\n- **Asynchronous**: Requests are queued and processed later.\n- **Serverless**: Inferencing infrastructure scales automatically without server management."
           }
         ],
         quiz: [
@@ -68,7 +68,7 @@ export const courseData: Domain[] = [
           },
           {
             title: "AWS Managed AI/ML Services",
-            content: "AWS offers purpose-built services:\n• **Amazon SageMaker AI**: Build, train, and deploy ML models.\n• **Amazon Transcribe**: Speech-to-text.\n• **Amazon Translate**: Language translation.\n• **Amazon Comprehend**: Natural language processing (NLP) for text analysis.\n• **Amazon Lex**: Conversational chatbots.\n• **Amazon Polly**: Text-to-speech."
+            content: "AWS offers purpose-built services:\n- **Amazon SageMaker AI**: Build, train, and deploy ML models.\n- **Amazon Transcribe**: Speech-to-text.\n- **Amazon Translate**: Language translation.\n- **Amazon Comprehend**: Natural language processing (NLP) for text analysis.\n- **Amazon Lex**: Conversational chatbots.\n- **Amazon Polly**: Text-to-speech."
           }
         ],
         quiz: [
@@ -90,7 +90,7 @@ export const courseData: Domain[] = [
           },
           {
             title: "Model and Business Metrics",
-            content: "• **Model Metrics**: Accuracy, Precision, Recall, F1 score.\n• **Business Metrics**: Cost per user, development cost, ROI, customer feedback."
+            content: "- **Model Metrics**: Accuracy, Precision, Recall, F1 score.\n- **Business Metrics**: Cost per user, development cost, ROI, customer feedback."
           }
         ],
         quiz: [
@@ -116,7 +116,7 @@ export const courseData: Domain[] = [
         subtopics: [
           {
             title: "Foundational GenAI Concepts",
-            content: "• **Tokens & Chunking**: Tokens are basic units of data processed by LLMs. Chunking is breaking large texts into smaller pieces for context limits.\n• **Embeddings & Vectors**: Representations of data in a high-dimensional vector space capturing semantic meaning.\n• **Transformer-based LLMs**: Neural network architecture powering modern text models.\n• **Diffusion Models**: Generate high-quality images from text prompts."
+            content: "- **Tokens & Chunking**: Tokens are basic units of data processed by LLMs. Chunking is breaking large texts into smaller pieces for context limits.\n- **Embeddings & Vectors**: Representations of data in a high-dimensional vector space capturing semantic meaning.\n- **Transformer-based LLMs**: Neural network architecture powering modern text models.\n- **Diffusion Models**: Generate high-quality images from text prompts."
           },
           {
             title: "Token-Based Pricing",
@@ -124,7 +124,7 @@ export const courseData: Domain[] = [
           },
           {
             title: "Agentic AI Concepts",
-            content: "• **Multi-Agent Systems**: Multiple AI agents collaborating to solve complex tasks.\n• **Model Context Protocol (MCP)**: An open standard connecting agents to external systems, standardizing tool usage and memory management."
+            content: "- **Multi-Agent Systems**: Multiple AI agents collaborating to solve complex tasks.\n- **Model Context Protocol (MCP)**: An open standard connecting agents to external systems, standardizing tool usage and memory management."
           }
         ],
         quiz: [
@@ -142,7 +142,7 @@ export const courseData: Domain[] = [
         subtopics: [
           {
             title: "Advantages and Disadvantages",
-            content: "• **Advantages**: High adaptability, strong conversational capabilities, rapid content generation.\n• **Disadvantages**: Hallucinations (generating false information), lack of interpretability, inaccuracies, nondeterminism (different answers for the same prompt)."
+            content: "- **Advantages**: High adaptability, strong conversational capabilities, rapid content generation.\n- **Disadvantages**: Hallucinations (generating false information), lack of interpretability, inaccuracies, nondeterminism (different answers for the same prompt)."
           },
           {
             title: "Model Selection Factors",
@@ -164,7 +164,7 @@ export const courseData: Domain[] = [
         subtopics: [
           {
             title: "AWS GenAI Services",
-            content: "• **Amazon Bedrock**: Unified API to access top FMs (Anthropic, Meta, Amazon Titan, etc.).\n• **Amazon SageMaker JumpStart**: Access to pre-trained, open-source models for deployment.\n• **Amazon Q**: Enterprise GenAI assistant.\n• **Agentic and Builder Tools**: Kiro, Strands Agents, Amazon Bedrock AgentCore for building autonomous workflows."
+            content: "- **Amazon Bedrock**: Unified API to access top FMs (Anthropic, Meta, Amazon Titan, etc.).\n- **Amazon SageMaker JumpStart**: Access to pre-trained, open-source models for deployment.\n- **Amazon Q**: Enterprise GenAI assistant.\n- **Agentic and Builder Tools**: Kiro, Strands Agents, Amazon Bedrock AgentCore for building autonomous workflows."
           }
         ],
         quiz: [
@@ -190,7 +190,7 @@ export const courseData: Domain[] = [
         subtopics: [
           {
             title: "Model Customization Tradeoffs",
-            content: "• **In-context Learning (Prompting)**: Lowest cost, highest agility. No model weights updated.\n• **RAG (Retrieval-Augmented Generation)**: Injects external, up-to-date knowledge dynamically. Highly effective for enterprise accuracy without retraining.\n• **Fine-Tuning**: Updates model weights for specific domain styles/formats. Moderate cost.\n• **Pre-training**: Training a foundation model from scratch. Exceptionally high cost and time.\n• **Model Distillation**: Transferring knowledge from a large model to a smaller, more efficient one."
+            content: "- **In-context Learning (Prompting)**: Lowest cost, highest agility. No model weights updated.\n- **RAG (Retrieval-Augmented Generation)**: Injects external, up-to-date knowledge dynamically. Highly effective for enterprise accuracy without retraining.\n- **Fine-Tuning**: Updates model weights for specific domain styles/formats. Moderate cost.\n- **Pre-training**: Training a foundation model from scratch. Exceptionally high cost and time.\n- **Model Distillation**: Transferring knowledge from a large model to a smaller, more efficient one."
           },
           {
             title: "Vector Databases for RAG",
@@ -212,7 +212,7 @@ export const courseData: Domain[] = [
         subtopics: [
           {
             title: "Techniques and Management",
-            content: "• **Zero-shot**: Asking the model without examples.\n• **Few-shot**: Providing a few examples in the prompt to guide formatting.\n• **Chain-of-Thought**: Instructing the model to 'think step-by-step', significantly improving reasoning.\n• **Amazon Bedrock Prompt Management**: Used for managing, versioning, and deploying prompts systematically."
+            content: "- **Zero-shot**: Asking the model without examples.\n- **Few-shot**: Providing a few examples in the prompt to guide formatting.\n- **Chain-of-Thought**: Instructing the model to 'think step-by-step', significantly improving reasoning.\n- **Amazon Bedrock Prompt Management**: Used for managing, versioning, and deploying prompts systematically."
           },
           {
             title: "Risks",
@@ -234,7 +234,7 @@ export const courseData: Domain[] = [
         subtopics: [
           {
             title: "Fine-Tuning Approaches",
-            content: "• **Instruction Tuning**: Teaching the model to follow commands and chat formats.\n• **Domain Adaptation / Continued Pre-training**: Exposing the model to vast amounts of specialized text (e.g., medical or legal corpora).\n• **RLHF (Reinforcement Learning from Human Feedback)**: Using human ratings to train a reward model that aligns the AI outputs with human preferences."
+            content: "- **Instruction Tuning**: Teaching the model to follow commands and chat formats.\n- **Domain Adaptation / Continued Pre-training**: Exposing the model to vast amounts of specialized text (e.g., medical or legal corpora).\n- **RLHF (Reinforcement Learning from Human Feedback)**: Using human ratings to train a reward model that aligns the AI outputs with human preferences."
           }
         ],
         quiz: [
@@ -252,7 +252,7 @@ export const courseData: Domain[] = [
         subtopics: [
           {
             title: "Metrics and Tools",
-            content: "• **ROUGE**: Evaluates summarization by comparing n-gram overlap with reference texts.\n• **BLEU**: Measures translation quality against human references.\n• **BERTScore**: Uses pre-trained contextual embeddings to evaluate semantic similarity.\n• **LLM-as-a-judge**: Using a powerful LLM to evaluate the outputs of another model.\n• **Amazon Bedrock Model Evaluation**: Facilitates both automated evaluation and human-in-the-loop workflows."
+            content: "- **ROUGE**: Evaluates summarization by comparing n-gram overlap with reference texts.\n- **BLEU**: Measures translation quality against human references.\n- **BERTScore**: Uses pre-trained contextual embeddings to evaluate semantic similarity.\n- **LLM-as-a-judge**: Using a powerful LLM to evaluate the outputs of another model.\n- **Amazon Bedrock Model Evaluation**: Facilitates both automated evaluation and human-in-the-loop workflows."
           }
         ],
         quiz: [
@@ -278,7 +278,7 @@ export const courseData: Domain[] = [
         subtopics: [
           {
             title: "Principles and Risks",
-            content: "• **Core Features**: Bias prevention, fairness, inclusivity, robustness, safety, veracity.\n• **Legal/Business Risks**: Intellectual property infringement, generating toxic/biased content, loss of trust, hallucinations.\n• **Amazon Bedrock Guardrails**: Implement safeguards tailored to your application requirements, independently filtering undesirable inputs and model outputs."
+            content: "- **Core Features**: Bias prevention, fairness, inclusivity, robustness, safety, veracity.\n- **Legal/Business Risks**: Intellectual property infringement, generating toxic/biased content, loss of trust, hallucinations.\n- **Amazon Bedrock Guardrails**: Implement safeguards tailored to your application requirements, independently filtering undesirable inputs and model outputs."
           }
         ],
         quiz: [
@@ -296,7 +296,7 @@ export const courseData: Domain[] = [
         subtopics: [
           {
             title: "Tools for Transparency",
-            content: "• **Amazon SageMaker Model Cards**: Centralized repository for documenting model details, intended use, risk ratings, and performance metrics.\n• **Amazon SageMaker Clarify**: Provides bias detection and explainability (e.g., feature importance mechanisms) across the ML lifecycle.\n• Interpreting models often involves navigating a tradeoff between advanced model capability (like deep learning black boxes) and system transparency."
+            content: "- **Amazon SageMaker Model Cards**: Centralized repository for documenting model details, intended use, risk ratings, and performance metrics.\n- **Amazon SageMaker Clarify**: Provides bias detection and explainability (e.g., feature importance mechanisms) across the ML lifecycle.\n- Interpreting models often involves navigating a tradeoff between advanced model capability (like deep learning black boxes) and system transparency."
           }
         ],
         quiz: [
@@ -322,7 +322,7 @@ export const courseData: Domain[] = [
         subtopics: [
           {
             title: "Data and Application Security",
-            content: "• **Data Privacy**: Customer data used in Amazon Bedrock is not used to train base AWS models.\n• **Protection Tools**: Apply IAM, AWS KMS for encryption, AWS PrivateLink for private network boundaries, and Amazon Macie for discovering PII in S3.\n• **AgentCore Identity & Policy**: Manage identity, authentication, and execution policies within autonomous AI agents.\n• **RAG Grounding**: Combat hallucinations by securely anchoring outputs to verified enterprise data via Retrieval Augmented Generation."
+            content: "- **Data Privacy**: Customer data used in Amazon Bedrock is not used to train base AWS models.\n- **Protection Tools**: Apply IAM, AWS KMS for encryption, AWS PrivateLink for private network boundaries, and Amazon Macie for discovering PII in S3.\n- **AgentCore Identity & Policy**: Manage identity, authentication, and execution policies within autonomous AI agents.\n- **RAG Grounding**: Combat hallucinations by securely anchoring outputs to verified enterprise data via Retrieval Augmented Generation."
           }
         ],
         quiz: [
@@ -340,7 +340,7 @@ export const courseData: Domain[] = [
         subtopics: [
           {
             title: "AWS Governance Tools",
-            content: "• **AWS Audit Manager**: Automate evidence collection for audit and compliance.\n• **AWS Artifact**: Access AWS compliance reports and security documents.\n• **AWS CloudTrail**: Used for logging and auditing API activity across AWS.\n• **AWS Config**: Assess and monitor configurations of AWS resources."
+            content: "- **AWS Audit Manager**: Automate evidence collection for audit and compliance.\n- **AWS Artifact**: Access AWS compliance reports and security documents.\n- **AWS CloudTrail**: Used for logging and auditing API activity across AWS.\n- **AWS Config**: Assess and monitor configurations of AWS resources."
           }
         ],
         quiz: [

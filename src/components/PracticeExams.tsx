@@ -1,8 +1,17 @@
 import { useState, useEffect } from 'react';
-import { practiceQuestionsData, PracticeQuestion } from '../data/practiceQuestionsData';
+import { practiceQuestionsData as aifQuestions, PracticeQuestion } from '../data/practiceQuestionsData';
+import { practiceQuestionsDataSAA as saaQuestions } from '../data/practiceQuestionsDataSAA';
+import { practiceQuestionsDataANS as ansQuestions } from '../data/practiceQuestionsDataANS';
 import { ChevronRight, RotateCcw, CheckCircle2, XCircle, ArrowRight, Bookmark, BookmarkCheck } from 'lucide-react';
 
-export function PracticeExams() {
+interface PracticeExamsProps {
+  certId: string;
+}
+
+export function PracticeExams({ certId }: PracticeExamsProps) {
+  const practiceQuestionsData = certId === 'saa-c03' ? saaQuestions 
+                              : certId === 'advanced-networking' ? ansQuestions 
+                              : aifQuestions;
   const [examState, setExamState] = useState<'setup' | 'running' | 'results'>('setup');
   const [selectedDomain, setSelectedDomain] = useState<string>('all');
   const [selectedQuestionCount, setSelectedQuestionCount] = useState<number | 'All'>(10);
@@ -121,8 +130,9 @@ export function PracticeExams() {
     }
 
     filtered = filtered.sort(() => Math.random() - 0.5);
-    // Standard AIF-C01 exam is 85 questions
-    filtered = filtered.slice(0, Math.min(85, filtered.length));
+    
+    const maxQuestions = certId === 'aif-c01' ? 85 : 65;
+    filtered = filtered.slice(0, Math.min(maxQuestions, filtered.length));
     
     if (filtered.length === 0) {
       alert("No questions available.");

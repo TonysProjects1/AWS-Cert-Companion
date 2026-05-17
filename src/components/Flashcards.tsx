@@ -1,9 +1,19 @@
 import { useState, useEffect } from 'react';
-import { flashcardsData } from '../data/flashcardsData';
+import { flashcardsData as aifFlashcards } from '../data/flashcardsData';
+import { flashcardsDataSAA as saaFlashcards } from '../data/flashcardsDataSAA';
+import { flashcardsDataANS as ansFlashcards } from '../data/flashcardsDataANS';
 import { ChevronLeft, ChevronRight, RotateCcw, Bookmark, BookmarkCheck } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 
-export function Flashcards() {
+interface FlashcardsProps {
+  certId: string;
+}
+
+export function Flashcards({ certId }: FlashcardsProps) {
+  const flashcardsData = certId === 'saa-c03' ? saaFlashcards 
+                       : certId === 'advanced-networking' ? ansFlashcards 
+                       : aifFlashcards;
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isFlipped, setIsFlipped] = useState(false);
   const [showOnlyFlagged, setShowOnlyFlagged] = useState(false);
@@ -80,7 +90,7 @@ export function Flashcards() {
         </h1>
         <p className="mt-6 text-sm text-[#1A1A1A]/70 max-w-2xl leading-relaxed">
           Test your knowledge against {flashcardsData.length} core concepts spanning all 5 exam domains. 
-          Use these cards to validate your understanding of the Cheat Sheet material before taking the AIF-C01 exam.
+          Use these cards to validate your understanding of the Cheat Sheet material before taking the {certId.toUpperCase()} exam.
         </p>
       </div>
 
@@ -152,7 +162,7 @@ export function Flashcards() {
                 </button>
 
                 <div className="text-xl md:text-2xl font-sans text-white/90 leading-relaxed max-w-lg mt-4">
-                  <ReactMarkdown>{currentCard.answer}</ReactMarkdown>
+                  <ReactMarkdown remarkPlugins={[remarkGfm]}>{currentCard.answer}</ReactMarkdown>
                 </div>
               </div>
 

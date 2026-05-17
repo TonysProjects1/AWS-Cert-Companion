@@ -2,9 +2,18 @@ import { Download, Printer, FileDown, ExternalLink } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { useState } from 'react';
-import { cheatSheetData } from '../data/cheatSheetData';
+import { cheatSheetData as aifCheatSheet } from '../data/cheatSheetData';
+import { cheatSheetDataSAA as saaCheatSheet } from '../data/cheatSheetDataSAA';
+import { cheatSheetDataANS as ansCheatSheet } from '../data/cheatSheetDataANS';
 
-export function CheatSheet() {
+interface CheatSheetProps {
+  certId: string;
+}
+
+export function CheatSheet({ certId }: CheatSheetProps) {
+  const cheatSheetData = certId === 'saa-c03' ? saaCheatSheet 
+                       : certId === 'advanced-networking' ? ansCheatSheet 
+                       : aifCheatSheet;
   const [showPrintModal, setShowPrintModal] = useState(false);
 
   const handleExportPDF = () => {
@@ -17,7 +26,11 @@ export function CheatSheet() {
   };
 
   const handleDownloadMarkdown = () => {
-    let mdContent = `# AWS Certified AI Practitioner (AIF-C01) - Cheat Sheet\n\n`;
+    let title = 'AI Practitioner (AIF-C01)';
+    if (certId === 'saa-c03') title = 'Solutions Architect (SAA-C03)';
+    if (certId === 'advanced-networking') title = 'Advanced Networking (ANS-C01)';
+    
+    let mdContent = `# AWS Certified ${title} - Cheat Sheet\n\n`;
     cheatSheetData.forEach(domain => {
       mdContent += `## ${domain.title}\n${domain.content}\n\n`;
     });
@@ -26,7 +39,7 @@ export function CheatSheet() {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = 'AIF-C01-CheatSheet.md';
+    a.download = `${certId.toUpperCase()}-CheatSheet.md`;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
