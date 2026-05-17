@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { flashcardsData as aifFlashcards } from '../data/flashcardsData';
 import { flashcardsDataSAA as saaFlashcards } from '../data/flashcardsDataSAA';
 import { flashcardsDataANS as ansFlashcards } from '../data/flashcardsDataANS';
+import { flashcardsDataCCP as ccpFlashcards } from '../data/flashcardsDataCCP';
 import { ChevronLeft, ChevronRight, RotateCcw, Bookmark, BookmarkCheck } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
@@ -11,8 +12,9 @@ interface FlashcardsProps {
 }
 
 export function Flashcards({ certId }: FlashcardsProps) {
-  const flashcardsData = certId === 'saa-c03' ? saaFlashcards 
-                       : certId === 'advanced-networking' ? ansFlashcards 
+  const flashcardsData = certId === 'saa-c03' ? saaFlashcards
+                       : certId === 'advanced-networking' ? ansFlashcards
+                       : certId === 'clf-c02' ? ccpFlashcards
                        : aifFlashcards;
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isFlipped, setIsFlipped] = useState(false);

@@ -66,8 +66,9 @@ function MainApp() {
   // Effect to reset selectedTopicId when changing certs
   useEffect(() => {
     if (selectedCert) {
-      const activeData = selectedCert === 'saa-c03' ? saaCourse 
-                       : selectedCert === 'advanced-networking' ? ansCourse 
+      const activeData = selectedCert === 'saa-c03' ? saaCourse
+                       : selectedCert === 'advanced-networking' ? ansCourse
+                       : selectedCert === 'clf-c02' ? courseDataCCP
                        : aifCourse;
       if (activeData.length > 0 && activeData[0].topics.length > 0) {
         setSelectedTopicId(activeData[0].topics[0].id);
@@ -83,8 +84,9 @@ function MainApp() {
   let selectedTopic: Topic | undefined;
   let selectedDomainTitle = '';
   
-  const activeCourseData = selectedCert === 'saa-c03' ? saaCourse 
-                         : selectedCert === 'advanced-networking' ? ansCourse 
+  const activeCourseData = selectedCert === 'saa-c03' ? saaCourse
+                         : selectedCert === 'advanced-networking' ? ansCourse
+                         : selectedCert === 'clf-c02' ? courseDataCCP
                          : aifCourse;
 
   for (const domain of activeCourseData) {
@@ -371,7 +373,7 @@ function MainApp() {
                 <footer className='mt-24 pt-8 border-t border-[#1A1A1A]/10 flex justify-between items-center text-[9px] uppercase tracking-[0.2em] opacity-40 font-bold mb-32'>
                   <div className='flex gap-12'>
                     <span>Duration: Self-Paced</span>
-                    <span>{selectedCert === 'saa-c03' ? 'SAA-C03 Prep' : selectedCert === 'advanced-networking' ? 'ANS-C01 Prep' : 'AIF-C01 Prep'}</span>
+                    <span>{selectedCert === 'saa-c03' ? 'SAA-C03 Prep' : selectedCert === 'advanced-networking' ? 'ANS-C01 Prep' : selectedCert === 'clf-c02' ? 'CLF-C02 Prep' : 'AIF-C01 Prep'}</span>
                   </div>
                   <div>
                      <span>Framework &copy; 2024</span>

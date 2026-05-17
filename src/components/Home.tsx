@@ -28,7 +28,7 @@ const CERT_OPTIONS: CertOption[] = [
     title: 'AWS Certified Cloud Practitioner',
     description: 'Overall understanding of the AWS Cloud platform, covering basic cloud concepts and security.',
     icon: Cloud,
-    active: false,
+    active: true,
     color: '#232F3E', // AWS Navy
     category: 'Foundational'
   },

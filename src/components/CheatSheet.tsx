@@ -5,14 +5,16 @@ import { useState } from 'react';
 import { cheatSheetData as aifCheatSheet } from '../data/cheatSheetData';
 import { cheatSheetDataSAA as saaCheatSheet } from '../data/cheatSheetDataSAA';
 import { cheatSheetDataANS as ansCheatSheet } from '../data/cheatSheetDataANS';
+import { cheatSheetDataCCP as ccpCheatSheet } from '../data/cheatSheetDataCCP';
 
 interface CheatSheetProps {
   certId: string;
 }
 
 export function CheatSheet({ certId }: CheatSheetProps) {
-  const cheatSheetData = certId === 'saa-c03' ? saaCheatSheet 
-                       : certId === 'advanced-networking' ? ansCheatSheet 
+  const cheatSheetData = certId === 'saa-c03' ? saaCheatSheet
+                       : certId === 'advanced-networking' ? ansCheatSheet
+                       : certId === 'clf-c02' ? ccpCheatSheet
                        : aifCheatSheet;
   const [showPrintModal, setShowPrintModal] = useState(false);
 
@@ -29,6 +31,7 @@ export function CheatSheet({ certId }: CheatSheetProps) {
     let title = 'AI Practitioner (AIF-C01)';
     if (certId === 'saa-c03') title = 'Solutions Architect (SAA-C03)';
     if (certId === 'advanced-networking') title = 'Advanced Networking (ANS-C01)';
+    if (certId === 'clf-c02') title = 'Cloud Practitioner (CLF-C02)';
     
     let mdContent = `# AWS Certified ${title} - Cheat Sheet\n\n`;
     cheatSheetData.forEach(domain => {

@@ -1,6 +1,7 @@
 import { recommendedReadingData as aifReading } from '../data/recommendedReadingData';
 import { recommendedReadingDataSAA as saaReading } from '../data/recommendedReadingDataSAA';
 import { recommendedReadingDataANS as ansReading } from '../data/recommendedReadingDataANS';
+import { recommendedReadingDataCCP as ccpReading } from '../data/recommendedReadingDataCCP';
 import { ExternalLink, FileText, BookText, GraduationCap, MonitorPlay } from 'lucide-react';
 
 interface RecommendedReadingProps {
@@ -8,8 +9,9 @@ interface RecommendedReadingProps {
 }
 
 export function RecommendedReading({ certId }: RecommendedReadingProps) {
-  const recommendedReadingData = certId === 'saa-c03' ? saaReading 
+  const recommendedReadingData = certId === 'saa-c03' ? saaReading
                                : certId === 'advanced-networking' ? ansReading
+                               : certId === 'clf-c02' ? ccpReading
                                : aifReading;
   const getIcon = (type: string) => {
     switch (type) {

@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { practiceQuestionsData as aifQuestions, PracticeQuestion } from '../data/practiceQuestionsData';
 import { practiceQuestionsDataSAA as saaQuestions } from '../data/practiceQuestionsDataSAA';
 import { practiceQuestionsDataANS as ansQuestions } from '../data/practiceQuestionsDataANS';
+import { practiceQuestionsDataCCP as ccpQuestions } from '../data/practiceQuestionsDataCCP';
 import { ChevronRight, RotateCcw, CheckCircle2, XCircle, ArrowRight, Bookmark, BookmarkCheck } from 'lucide-react';
 
 interface PracticeExamsProps {
@@ -9,8 +10,9 @@ interface PracticeExamsProps {
 }
 
 export function PracticeExams({ certId }: PracticeExamsProps) {
-  const practiceQuestionsData = certId === 'saa-c03' ? saaQuestions 
-                              : certId === 'advanced-networking' ? ansQuestions 
+  const practiceQuestionsData = certId === 'saa-c03' ? saaQuestions
+                              : certId === 'advanced-networking' ? ansQuestions
+                              : certId === 'clf-c02' ? ccpQuestions
                               : aifQuestions;
   const [examState, setExamState] = useState<'setup' | 'running' | 'results'>('setup');
   const [selectedDomain, setSelectedDomain] = useState<string>('all');
