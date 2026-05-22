@@ -2,6 +2,7 @@ import React, { useState, useEffect, Component, ErrorInfo, ReactNode } from 'rea
 import { courseData as aifCourse, Topic } from './data/courseData';
 import { courseDataSAA as saaCourse } from './data/courseDataSAA';
 import { courseDataANS as ansCourse } from './data/courseDataANS';
+import { courseDataCCP } from './data/courseDataCCP';
 import { Quiz } from './components/Quiz';
 import { CheatSheet } from './components/CheatSheet';
 import { Flashcards } from './components/Flashcards';
